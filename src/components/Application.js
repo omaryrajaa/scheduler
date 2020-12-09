@@ -1,29 +1,80 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "components/Application.scss";
 import DayList from "./DayList";
+import Appointment from "components/Appointment";
+const axios = require('axios').default;
 
-const days = [
+
+const appointments = [
   {
     id: 1,
-    name: "Monday",
-    spots: 2,
+    time: "12pm",
   },
   {
     id: 2,
-    name: "Tuesday",
-    spots: 5,
+    time: "1pm",
+    interview: {
+      student: "Lydia Miller-Jones",
+      interviewer: {
+        id: 1,
+        name: "Sylvia Palmer",
+        avatar: "https://i.imgur.com/LpaY82x.png",
+      }
+    }
   },
   {
     id: 3,
-    name: "Wednesday",
-    spots: 0,
+    time: "2pm",
+    interview: {
+      student: "Rajaa OMARY",
+      interviewer: {
+        id: 5,
+        name: "Sven Jones",
+        avatar: "https://i.imgur.com/twYrpay.jpg",
+      }
+    }
   },
+
+  {
+    id: 4,
+    time: "3pm",
+    interview: {
+      student: "Emma Dupond",
+      interviewer: {
+        id: 2,
+        name: "Tori Malcolm",
+        avatar: "https://i.imgur.com/Nmx0Qxo.png",
+      }
+    }
+  },
+
+  {
+    id: 5,
+    time: "4pm",
+  }
+
 ];
+
+
 
 
 
 export default function Application(props) {
   const [day, setDay] = useState("Monday");
+  const [days, setDays] = useState([]);
+
+useEffect(() => {
+  axios({
+    method: "GET",
+    url: `/api/days`
+  })
+    .then((response) => {
+      setDays([...response.data])
+    })
+
+}, [])
+  const parsedAppointments = appointments.map(appointment => <Appointment key={appointment.id} {...appointment} />);
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -48,7 +99,8 @@ export default function Application(props) {
 
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
+        {parsedAppointments}
+        <Appointment key="last" time="5pm" />
       </section>
     </main>
   );
