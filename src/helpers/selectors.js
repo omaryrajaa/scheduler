@@ -1,24 +1,40 @@
 
-
-
 export function getAppointmentsForDay(state, day) {
-  const appointmentsArray = [];
 
-  const filteredAppointments = state.days.filter(elt => elt.name === day)
 
-  if(filteredAppointments.length > 0) {
-    const listAppointnments = filteredAppointments[0].appointments;
+  const dayFound = state.days.find(currentDay => currentDay.name === day)
+
+  if(!dayFound) {
+    return [];
+  }
+    const listAppointnments = dayFound.appointments;
    
     if (listAppointnments) {
-      for(const apt of listAppointnments) {
-        if(state.appointments.hasOwnProperty(apt)) {
-          appointmentsArray.push(state.appointments[apt])
-        }
-      }
-      return appointmentsArray
-    } 
-  }  
+      
+      const appointments = dayFound.appointments.map(appointmentId => state.appointments[appointmentId])
 
-  return [];
-    
-};
+      return appointments
+    }  else {
+        return [];
+    }   
+  };
+
+export function getInterview(state, interview) {
+
+  if (interview) {
+
+    return {
+      student: interview.student,
+      interviewer: {
+        id: interview.interviewer,
+        name: state.interviewers[interview.interviewer].name,
+        avatar: state.interviewers[interview.interviewer].avatar
+      }
+    }    
+
+  } else {
+
+    return null;
+
+  }
+}
