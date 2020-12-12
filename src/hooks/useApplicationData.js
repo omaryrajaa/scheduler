@@ -39,7 +39,7 @@ useEffect(() => {
 }, [])
 
 function bookInterview(id, interview) {
-
+  return axios.put(`/api/appointments/${id}`, { interview: interview }).then(res => {
   const appointment = {
     ...state.appointments[id],
     interview: { ...interview }
@@ -55,19 +55,21 @@ function bookInterview(id, interview) {
     appointments
   });
 
-  return axios.put(`/api/appointments/${id}`, { interview: interview });
-  
+});
 }
 
 const cancelInterview = (id) => {
+  return axios.delete(`/api/appointments/${id}`).then(res => {
   const appointments = {...state.appointments};
   appointments[id].interview = null
   setState({
     ...state, 
     appointments
   });
-  return axios.delete(`/api/appointments/${id}`);
+});
 }
+
+
 const setDay = day => setState({ ...state, day });
 
 return {
