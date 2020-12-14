@@ -38,6 +38,7 @@ useEffect(() => {
 
 }, [])
 
+
 function bookInterview(id, interview) {
   return axios.put(`/api/appointments/${id}`, { interview: interview }).then(res => {
   const appointment = {
@@ -50,9 +51,21 @@ function bookInterview(id, interview) {
     [id]: appointment
   };
 
+  console.log("state.day = ", state.day)
+  console.log("state.days = ", state.days)
+  
+    const mapDays = [...state.days].map((day) => {
+      if (!state.appointments[id].interview && day.name ===  state.day) {
+        day.spots -= 1;
+      }
+    return day;
+    });
+    
+  const days = [...mapDays];
   setState({
     ...state, 
-    appointments
+    appointments,
+    days
   });
 
 });
@@ -61,10 +74,21 @@ function bookInterview(id, interview) {
 const cancelInterview = (id) => {
   return axios.delete(`/api/appointments/${id}`).then(res => {
   const appointments = {...state.appointments};
-  appointments[id].interview = null
+  appointments[id].interview = null;
+
+  const mapDays = [...state.days].map((day) => {
+    if(day.name ===  state.day) {
+      day.spots += 1;
+    }
+    return day;
+  });
+
+  const days = [...mapDays];
+
   setState({
     ...state, 
-    appointments
+    appointments,
+    days
   });
 });
 }
