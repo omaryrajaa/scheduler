@@ -50,9 +50,6 @@ function bookInterview(id, interview) {
     ...state.appointments,
     [id]: appointment
   };
-
-  console.log("state.day = ", state.day)
-  console.log("state.days = ", state.days)
   
     const mapDays = [...state.days].map((day) => {
       if (!state.appointments[id].interview && day.name ===  state.day) {
