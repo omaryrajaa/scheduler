@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const axios = require('axios').default;
+import axios from 'axios';
 
 export default function useApplicationData() {
 const [state, setState] = useState({
@@ -12,20 +12,9 @@ const [state, setState] = useState({
 
 useEffect(() => {
   Promise.all([
-    axios({
-      method: "GET",
-      url: `/api/days`
-    }),
-
-    axios({
-      method: "GET",
-      url: `/api/appointments`
-    }),
-
-    axios({
-      method: "GET",
-      url: `/api/interviewers`
-    })
+    axios.get('/api/days'),
+    axios.get('/api/appointments'),
+    axios.get('/api/interviewers'),
   ]).then((all) => {  
         setState(prev => ({ 
         ...prev, 
