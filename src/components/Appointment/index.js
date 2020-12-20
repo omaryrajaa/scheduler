@@ -1,25 +1,18 @@
 import React from "react";
 
-import "./styles.scss"
+import "./styles.scss";
 
 import Header from "./Header";
 import Show from "./Show";
 import Empty from "./Empty";
 import Form from "./Form";
-import Confirm from "./Confirm"
+import Confirm from "./Confirm";
 import Status from "./Status";
-import Error from "./Error"
+import Error from "./Error";
 
+import useVisualMode from "../../hooks/useVisualMode.js";
 
-
-import  useVisualMode  from "../../hooks/useVisualMode.js"
-
-
-
-
-
-export default function Appointment (props) {
-
+export default function Appointment(props) {
   //modes list
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
@@ -37,7 +30,7 @@ export default function Appointment (props) {
 
   const create = () => transition(CREATE);
   const cancel = () => back();
-  const deleteInterview = () => transition(CONFIRM)
+  const deleteInterview = () => transition(CONFIRM);
 
   const edit = () => transition(EDIT);
 
@@ -46,33 +39,31 @@ export default function Appointment (props) {
   const save = (name, interviewer) => {
     const interview = {
       student: name,
-      interviewer
+      interviewer,
     };
 
     transition(SAVING);
 
     props
-    .bookInterview(props.id,interview)
-    .then(() => transition(SHOW))
-    .catch(error => transition(ERROR_SAVE, true));
-  }
+      .bookInterview(props.id, interview)
+      .then(() => transition(SHOW))
+      .catch((error) => transition(ERROR_SAVE, true));
+  };
 
   const confirmDeleteInterview = () => {
-
     transition(DELETING, true);
 
     props
-    .cancelInterview(props.id)
-    .then(() => transition(EMPTY))
-    .catch(error => transition(ERROR_DELETE, true));
-    }
+      .cancelInterview(props.id)
+      .then(() => transition(EMPTY))
+      .catch((error) => transition(ERROR_DELETE, true));
+  };
 
-    return (
-      <article className="appointment" data-testid="appointment">
-      <Header time={props.time}/>
+  return (
+    <article className="appointment" data-testid="appointment">
+      <Header time={props.time} />
 
-      {mode === EMPTY && 
-      <Empty onAdd={create} />}
+      {mode === EMPTY && <Empty onAdd={create} />}
 
       {mode === SHOW && (
         <Show
@@ -81,7 +72,6 @@ export default function Appointment (props) {
           onDelete={deleteInterview}
           onEdit={edit}
         />
-
       )}
 
       {mode === CONFIRM && (
@@ -90,56 +80,37 @@ export default function Appointment (props) {
           onCancel={cancel}
           onConfirm={confirmDeleteInterview}
         />
-
       )}
 
-      {mode === CREATE &&
-        <Form interviewers={props.interviewers}
-        onCancel={cancel}
-        onSave={save}
+      {mode === CREATE && (
+        <Form
+          interviewers={props.interviewers}
+          onCancel={cancel}
+          onSave={save}
         />
-      } 
+      )}
 
-      {mode === EDIT &&
-        <Form interviewers={props.interviewers}
-        onCancel={cancel}
-        onSave={save}
-
-        interviewer={props.interview.interviewer.id}
-        name={props.interview.student}
-
+      {mode === EDIT && (
+        <Form
+          interviewers={props.interviewers}
+          onCancel={cancel}
+          onSave={save}
+          interviewer={props.interview.interviewer.id}
+          name={props.interview.student}
         />
-      } 
+      )}
 
-      {mode === SAVING &&
-        <Status 
-        message={"Saving"}
-        />
-      } 
+      {mode === SAVING && <Status message={"Saving"} />}
 
-      {mode === DELETING &&
-        <Status 
-        message={"Deleting"}
-        />
-      } 
+      {mode === DELETING && <Status message={"Deleting"} />}
 
-      {mode === ERROR_DELETE &&
-        <Error 
-        message={"Could not cancel appointment."}
-        onClose={closeError} 
-        />
-      }
+      {mode === ERROR_DELETE && (
+        <Error message={"Could not cancel appointment."} onClose={closeError} />
+      )}
 
       {mode === ERROR_SAVE && (
-				<Error
-					message="Could not save appointment."
-          onClose={closeError}
-				/>
-			)}
-
+        <Error message="Could not save appointment." onClose={closeError} />
+      )}
     </article>
-    )
-
-  
+  );
 }
-
