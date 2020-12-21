@@ -40,10 +40,23 @@ npm run storybook
 
 ## ScreenShots
 
+### Opening page
+![Opening page](https://raw.githubusercontent.com/omaryrajaa/scheduler/master/docs/Opening%20page.png)
 
-![Opening page]()
-![Create a new appoitment]()
-![Edit an appoitment]()
-![Cancel an appointment]()
-![Transition States]()
-![Error messages]()
+### Create new appointment
+![Create appoitment1](https://raw.githubusercontent.com/omaryrajaa/scheduler/master/docs/Create%20appointment.png)
+![Create appoitment2](https://raw.githubusercontent.com/omaryrajaa/scheduler/master/docs/Confirm%20create%20appointment.png)
+
+### Edit appointment
+![Edit an appoitment1](https://raw.githubusercontent.com/omaryrajaa/scheduler/master/docs/Edit%20appointment1.png)
+![Edit an appoitment2](https://raw.githubusercontent.com/omaryrajaa/scheduler/master/docs/Edit%20appointment2.png)
+![Edit an appoitment3](https://raw.githubusercontent.com/omaryrajaa/scheduler/master/docs/Save%20edit%20appointment.png)
+
+### Cancel appointment
+![Cancel an appointment1](https://raw.githubusercontent.com/omaryrajaa/scheduler/master/docs/Delete%20appointment1.png)
+![Cancel an appointment2](https://raw.githubusercontent.com/omaryrajaa/scheduler/master/docs/Delete%20appointment%20confirm%20message.png)
+![Cancel an appointment3](https://raw.githubusercontent.com/omaryrajaa/scheduler/master/docs/Transition.png)
+![Cancel an appointment3](https://raw.githubusercontent.com/omaryrajaa/scheduler/master/docs/Appointment%20deleted.png)
+
+### Error message
+![Error message](https://raw.githubusercontent.com/omaryrajaa/scheduler/master/docs/Error%20message.png)
